@@ -17,12 +17,13 @@ FindPathDFS (v,d)
         output edges; // there is a path from v to d
     else
         No path from v to d
-    DFS(v,d)
-        num(v) = i++;
-        for all vertices u adjacent to s
-            if num(u) is 0 and v!=d
-                attach edge(uv) to edges;
-                DFS(u,d);
+
+DFS(v,d)
+    num(v) = i++;
+    for all vertices u adjacent to s
+        if num(u) is 0 and v!=d
+            attach edge(uv) to edges;
+            DFS(u,d);
 
 ```
 
@@ -45,3 +46,9 @@ depthFirstSearch()
     output edges;
 ```
 You have to further enhance the program in (i) above by making your program more user-friendly and incorporating an application or more such as transportation systems, and road networks.
+
+### Internet Resources
+1. https://www.baeldung.com/java-graphs
+2. https://www.javatpoint.com/java-graph
+3. https://www.section.io/engineering-education/graph-traversals-java/
+4. https://www.geeksforgeeks.org/java-program-to-represent-graphs-using-linked-list/
