@@ -111,9 +111,9 @@ class Graph<T> {
 
         // Create the adjacency matrix
         for (int i = 0; i < numVertices; i++) {
-            List<T> neighbors = map.get(i + 1);
+            List<T> neighbors = map.get(i);
             for (int j = 0; j < numVertices; j++) {
-                if (neighbors != null && neighbors.contains(j + 1)) {
+                if (neighbors != null && neighbors.contains(j)) {
                     adjacencyMatrix[i][j] = 1;
                 }
             }
@@ -145,7 +145,9 @@ public class main {
         g.addEdge(2, 3);
         g.addEdge(3, 4);
 
+        g.getNumEdges();
         g.AdjacencyMatrix();
+        System.out.print(g.AdjacencyList());
 
     }
 }
