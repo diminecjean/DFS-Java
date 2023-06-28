@@ -209,8 +209,8 @@ public class DFS_Implementation {
         // Since the graph is bidirectional,
         // so boolean bidirectional is passed as true.
 
-        g.addEdge(0, 1);
         g.addEdge(0, 4);
+        g.addEdge(0, 1);
         g.addEdge(1, 2);
         g.addEdge(1, 3);
         g.addEdge(1, 4);
