@@ -1,1 +1,2 @@
-dgeList.add(u);
+
+        g.FindPathDFS(4, 0
