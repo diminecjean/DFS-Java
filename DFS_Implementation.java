@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 // Graph ADT
@@ -173,32 +175,32 @@ class Graph {
             edgeList.clear();
             i = 0;
 
-            // while (v != d && num.get(v) == 0) {
-            DFS(v, d);
-            // }
+            while (v != d && num.get(v) == 0) {
+                DFS(v, d);
+            }
 
             // Output the edges
-            if (!edgeList.isEmpty()) {
+            if (num.get(d) != 0) {
                 System.out.print("\nPath from " + v + " to " + d + ": ");
                 System.out.print("\n" + v);
                 for (int i = 0; i < edgeList.size(); i++) {
                     System.out.print(" -> " + edgeList.get(i));
                 }
-            } else
+            } else {
                 System.out.print("\nThere is no path from " + v + " to " + d);
+            }
         } else {
             System.out.print("\n");
             ifVertexExist(v);
             ifVertexExist(d);
         }
-
     }
 
     // DFS Method
     public int DFS(int v, int d) {
         num.put(v, ++i);
         for (int u : map.get(v)) {
-            if ((num.get(u) == 0) && (v != d)) {
+            if (num.get(u) == 0 && v != d) {
                 // If the encountered vertex does not have an outgoing edge,
                 // and is also not the destination vertex,
                 // skip the vertex
@@ -207,8 +209,6 @@ class Graph {
                 else
                     edgeList.add(u);
                 return DFS(u, d);
-            } else {
-                break;
             }
         }
         return d;
