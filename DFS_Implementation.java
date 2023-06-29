@@ -14,21 +14,6 @@ class Graph {
     private int i;
     private int numVertices = 0;
 
-    // private class Edge{
-    // private int u;
-    // private int v;
-
-    // public Edge(int u, int v) {
-    // this.u = u;
-    // this.v = v;
-    // }
-
-    // @Override
-    // public String toString() {
-    // return u + " - " + v;
-    // }
-    // }
-
     // Constructor
     public Graph() {
         edgeList = new ArrayList<>();
@@ -37,7 +22,11 @@ class Graph {
 
     // Method to add a vertex
     public void addVertex(int vertex) {
-        map.put(vertex, new LinkedList<Integer>());
+        if (!map.containsKey(vertex)) {
+            map.put(vertex, new LinkedList<Integer>());
+            System.out.println("Vertex " + vertex + " added.");
+        } else
+            System.out.println("Vertex " + vertex + " already exists.");
     }
 
     // Method to add an edge given the source and destination
@@ -52,7 +41,13 @@ class Graph {
 
         // Add the destination vertex as the value correspondint to source vertex as key
         // This establishes a relationship from the source to destination vertex
-        map.get(source).add(destination);
+        if (map.get(source).contains(destination)) {
+            System.out.println("Edge from " + source + " to " + destination + " already exists.");
+        } else {
+            map.get(source).add(destination);
+            System.out.println("Edge from " + source + " to " + destination + " is added.");
+        }
+
     }
 
     // Method to remove a vertex
@@ -85,10 +80,9 @@ class Graph {
     }
 
     // Method to count the number of vertices present
-    public void getNumVertex() {
-        int vertex_count = map.keySet().size();
-        System.out.println("Number of vertices in the graph: " + vertex_count);
-        numVertices = vertex_count;
+    public int getNumVertex() {
+        numVertices = map.keySet().size();
+        return numVertices;
     }
 
     // Method to count the number of edges present
@@ -105,9 +99,9 @@ class Graph {
     // Method to determine if a vertex exists in the graph
     public void ifVertexExist(int vertex) {
         if (!map.containsKey(vertex))
-            System.out.print(vertex + "is not found in the graph");
+            System.out.println("Vertex " + vertex + " is not found in the graph");
         else
-            System.out.print(vertex + "is found in the graph.");
+            System.out.println("Vertex" + vertex + " is found in the graph.");
     }
 
     // Method to determine if there is an edge between two vertices
@@ -134,47 +128,69 @@ class Graph {
 
     // Method to show adjacency matrix
     public void AdjacencyMatrix() {
-        int[][] adjacencyMatrix = new int[numVertices][numVertices];
+        getNumVertex();
+
+        int[][] adjacencyMatrix = new int[(numVertices + 1)][(numVertices + 1)];
+
+        adjacencyMatrix[0][0] = 0;
+
+        // Initialize the header column and row
+        for (int i = 1; i < numVertices + 1; i++) {
+            adjacencyMatrix[i][0] = (i - 1);
+            adjacencyMatrix[0][i] = (i - 1);
+        }
 
         // Create the adjacency matrix
         for (int i = 0; i < numVertices; i++) {
             List<Integer> neighbors = map.get(i);
             for (int j = 0; j < numVertices; j++) {
                 if (neighbors != null && neighbors.contains(j)) {
-                    adjacencyMatrix[i][j] = 1;
-                }
+                    adjacencyMatrix[i + 1][j + 1] = 1;
+                } else
+                    adjacencyMatrix[i + 1][j + 1] = 0;
             }
         }
 
         // Display the adjacency matrix
-        for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < numVertices; j++) {
+        for (int i = 0; i < numVertices + 1; i++) {
+            for (int j = 0; j < numVertices + 1; j++) {
                 System.out.print(adjacencyMatrix[i][j] + " ");
+                if (j == 0)
+                    System.out.print("|");
             }
             System.out.println();
+            if (i == 0)
+                System.out.println("-----------------");
         }
     }
 
     // Method to find path
     public void FindPathDFS(int v, int d) {
-        for (int vertex : map.keySet()) {
-            num.put(vertex, 0);
-        }
-        edgeList.clear();
-        i = 0;
-
-        // while (v != d && num.get(v) == 0) {
-        DFS(v, d);
-        // }
-
-        // Output the edges
-        if (!edgeList.isEmpty()) {
-            System.out.print("\n" + v);
-            for (int i = 0; i < edgeList.size(); i++) {
-                System.out.print(" -> " + edgeList.get(i));
+        if (map.containsKey(v) && map.containsKey(d)) {
+            for (int vertex : map.keySet()) {
+                num.put(vertex, 0);
             }
-        } else
-            System.out.print("There is no path from " + v + " to " + d);
+            edgeList.clear();
+            i = 0;
+
+            // while (v != d && num.get(v) == 0) {
+            DFS(v, d);
+            // }
+
+            // Output the edges
+            if (!edgeList.isEmpty()) {
+                System.out.print("\nPath from " + v + " to " + d + ": ");
+                System.out.print("\n" + v);
+                for (int i = 0; i < edgeList.size(); i++) {
+                    System.out.print(" -> " + edgeList.get(i));
+                }
+            } else
+                System.out.print("\nThere is no path from " + v + " to " + d);
+        } else {
+            System.out.print("\n");
+            ifVertexExist(v);
+            ifVertexExist(d);
+        }
 
     }
 
@@ -202,28 +218,133 @@ class Graph {
 
 public class DFS_Implementation {
     public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
         // Object of graph is created.
         Graph g = new Graph();
 
-        // edges are added.
-        // Since the graph is bidirectional,
-        // so boolean bidirectional is passed as true.
+        // System.out.print("Number of edges in the graph: ");
+        // int num = sc.nextInt();
 
-        g.addEdge(0, 4);
+        // Add edges into the graph
+        // for (int i = 0; i < num; i++) {
+        // System.out.println("\nEdge " + (i + 1));
+        // System.out.print("Source vertex for edge " + (i + 1) + ": ");
+        // int source = sc.nextInt();
+        // System.out.print("Source vertex for edge " + (i + 1) + ": ");
+        // int destination = sc.nextInt();
+
+        // g.addEdge(source, destination);
+        // }
+
         g.addEdge(0, 1);
+        g.addEdge(0, 4);
         g.addEdge(1, 2);
         g.addEdge(1, 3);
         g.addEdge(1, 4);
         g.addEdge(2, 3);
         g.addEdge(3, 4);
 
-        // g.getNumEdges();
-        // g.AdjacencyMatrix();
-        System.out.print(g.AdjacencyList());
+        // Clear the console
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
 
-        g.FindPathDFS(4, 0);
-        g.FindPathDFS(2, 4);
-        g.FindPathDFS(0, 4);
+        boolean exit = false;
 
+        while (!exit) {
+            // User Menu
+            System.out.println(" Menu");
+            System.out.println("-------");
+            System.out.println("[1] Print Adjacency List");
+            System.out.println("[2] Print Adjacency Matrix");
+            System.out.println("[3] Add a Vertex");
+            System.out.println("[4] Add an Edge");
+            System.out.println("[5] Get the Number of Vertices");
+            System.out.println("[6] Get the Number of Edges");
+            System.out.println("[7] Find a Path for Two Vertices");
+            System.out.println("[8] Exit");
+            System.out.print("\nSelect an option by entering the corresponding number: ");
+            int option = sc.nextInt();
+
+            // Clear the console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+
+            switch (option) {
+                case 1: // Print Adjacency List
+                {
+                    System.out.println("Adjacency List of Graph G");
+                    System.out.println("-----------------------------");
+                    System.out.print(g.AdjacencyList());
+                }
+
+                    break;
+                case 2: // Print Adjacency Matrix
+                {
+                    System.out.println("Adjacency Matrix of Graph G");
+                    System.out.println("-----------------------------");
+                    g.AdjacencyMatrix();
+                }
+                    break;
+                case 3: // Add a vertex
+                {
+                    System.out.print("Vertex to be added: ");
+                    int v = sc.nextInt();
+                    g.addVertex(v);
+                }
+                    break;
+                case 4: // Add an Edge
+                {
+                    System.out.print("Source Vertex: ");
+                    int s = sc.nextInt();
+                    System.out.print("Destination Vertex: ");
+                    int d = sc.nextInt();
+                    System.out.print("\n");
+                    g.addEdge(s, d);
+
+                }
+                    break;
+                case 5: // Get the number of Vertices
+                {
+                    int numVertex = g.getNumVertex();
+                    System.out.println("Number of Vertices in the graph: " + numVertex);
+                }
+                    break;
+                case 6: // Get the number of Edges
+                {
+                    g.getNumEdges();
+                }
+                    break;
+                case 7: // Find a path for the 2 vertices
+                {
+                    System.out.println("Find a path with DFS");
+                    System.out.println("---------------------");
+                    System.out.print("Source Vertex: ");
+                    int v = sc.nextInt();
+                    System.out.print("Destination Vertex: ");
+                    int d = sc.nextInt();
+
+                    g.FindPathDFS(v, d);
+                }
+                    break;
+                case 8: // Exit the loop
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Please enter an option within the given range.");
+            }
+
+            System.out.print("\n\nContinue? (y/n): ");
+            char c = sc.next().charAt(0);
+
+            if (c != 'y' || c != 'y')
+                break;
+
+            // Clear the console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
+
+        sc.close();
     }
 }
