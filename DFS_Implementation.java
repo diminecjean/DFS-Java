@@ -209,13 +209,9 @@ class Graph {
                 // If the encountered vertex does not have an outgoing edge,
                 // and is also not the destination vertex,
                 // skip the vertex
-                System.out.println(map.get(u));
-                int x = map.get(u).get(map.get(u).size() - 1);
-                System.out.println("u: " + u + ", last item in list: " + x);
                 if (map.get(u).isEmpty() && u != d)
                     continue;
                 else {
-                    System.out.println(u);
                     edgeList.push(u);
                     return DFS(u, d);
                 }
@@ -228,7 +224,6 @@ class Graph {
                     if (visitedList.contains(v))
                         continue;
                     else {
-                        System.out.println("in else if");
                         visitedList.push(edgeList.pop());
                         DFS(edgeList.lastElement(), d);
                     }
