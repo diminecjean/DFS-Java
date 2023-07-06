@@ -1,0 +1,13 @@
+[0] KUL - Kuala Lumpur International Airport
+[1] PEN - Penang International Airport
+[2] LGK - Langkawi International Airport
+[3] BKI - Kota Kinabalu International Airport
+[4] KCH - Kuching International Airport
+[5] JHB - Senai International Airport
+[6] AOR - Sultan Abdul Halim Airport
+[7] TGG - Sultan Mahmud Airport
+[8] KBR - Sultan Ismail Petra Airport
+[9] LBU - Labuan Airport
+[10] SDK - Sandakan Airport
+[11] MYY - Miri Airport
+[12] SBW - Sibu Airport
