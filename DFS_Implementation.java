@@ -180,6 +180,8 @@ class Graph {
             visitedList.clear();
             i = 0;
 
+            edgeList.add(v); // add source edge into path
+
             while (v != d && num.get(v) == 0) {
                 DFS(v, d);
             }
@@ -188,7 +190,7 @@ class Graph {
             if (num.get(d) != 0) {
                 System.out.print("\nPath from " + v + " to " + d + ": ");
                 System.out.print("\n" + v);
-                for (int i = 0; i < edgeList.size(); i++) {
+                for (int i = 1; i < edgeList.size(); i++) {
                     System.out.print(" -> " + edgeList.get(i));
                 }
             } else {
