@@ -336,8 +336,8 @@ public class DFS_Enhanced_Implementation {
     public static void FrontPage() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
 
-        String pattern = "\n\n            __|__\n" +
-                "     --@--@--(_)--@--@--";
+        String pattern = "\n\n               __|__\n" +
+                "        --@--@--(_)--@--@--";
 
         System.out.println(pattern);
 
@@ -388,7 +388,7 @@ public class DFS_Enhanced_Implementation {
         enhancedInstance.readFileIntoGraph("domestic_route.txt", g);
         enhancedInstance.readFileIntoHashMap("IATA_airport_codes.txt", codes);
 
-        // FrontPage();
+        FrontPage();
 
         boolean exit = false;
 
@@ -411,9 +411,9 @@ public class DFS_Enhanced_Implementation {
 
             g.FindPathDFS(v, d);
 
-            // // Clear the console
-            // System.out.print("\033[H\033[2J");
-            // System.out.flush();
+            // Clear the console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
 
             List<Integer> path = new ArrayList<>();
             path = g.edgeList;
@@ -438,9 +438,9 @@ public class DFS_Enhanced_Implementation {
 
         }
 
-        System.out.println("==============================================");
-        System.out.println("\n Thank you for visiting Malaysia Airlines! ");
-        System.out.println(" ~~~~ See you next time ~~~~ ");
+        System.out.println("\n\n==============================================");
+        System.out.println("\n   Thank you for visiting Malaysia Airlines! ");
+        System.out.println("        ~~~~ See you next time ~~~~ ");
         System.out.println("\n==============================================");
 
         System.out.println("\n\nExiting program...");
