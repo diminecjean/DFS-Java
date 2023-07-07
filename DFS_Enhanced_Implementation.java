@@ -1,4 +1,8 @@
 import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.util.*;
+
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -180,18 +184,19 @@ class Graph {
             visitedList.clear();
             i = 0;
 
+            edgeList.add(v); // add source edge into path
+
             while (v != d && num.get(v) == 0) {
                 DFS(v, d);
             }
 
             if (num.get(d) == 0) {
-
                 System.out.print("\nThere is no path from " + v + " to " + d);
             }
             // else {
             // System.out.print("\nPath from " + v + " to " + d + ": ");
             // System.out.print("\n" + v);
-            // for (int i = 0; i < edgeList.size(); i++) {
+            // for (int i = 1; i < edgeList.size(); i++) {
             // System.out.print(" -> " + edgeList.get(i));
             // }
             // }
@@ -217,12 +222,12 @@ class Graph {
                     return DFS(u, d);
                 }
 
+            } else if (v == d) {
+                return d;
             }
             // If the encountered vertex, u has been encountered before (num(u)!=0),
             // and u is the last value in the adjacency list of v,
             else if ((num.get(u) != 0) && (u == map.get(v).get(map.get(v).size() - 1))) {
-                // if u has the same value with the destination edge
-                // put d into the list of edges, then terminate the program and return d
                 if (u == d) {
                     edgeList.push(u);
                     return d;
@@ -238,14 +243,10 @@ class Graph {
                         continue;
                     else {
                         visitedList.push(edgeList.pop());
-                        if (edgeList.lastElement() != null)
-                            DFS(edgeList.lastElement(), d);
-                        else
-                            DFS(edgeList.get(edgeList.size() - 2), d);
+                        DFS(edgeList.lastElement(), d);
                     }
                 }
-            } else
-                return d;
+            }
         }
         return d;
     }
@@ -335,7 +336,7 @@ public class DFS_Enhanced_Implementation {
     public static void FrontPage() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
 
-        String pattern = "            __|__\n" +
+        String pattern = "\n\n            __|__\n" +
                 "     --@--@--(_)--@--@--";
 
         System.out.println(pattern);
@@ -355,7 +356,7 @@ public class DFS_Enhanced_Implementation {
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
-        pattern = "                              _\n" +
+        pattern = "\n\n                              _\n" +
                 "                              -=\\`\\\n" +
                 "                          |\\ ____\\_\\__\n" +
                 "Loading...              -=\\c`\"\"\"\"\"\"\"\" \"`)\n" +
@@ -387,55 +388,55 @@ public class DFS_Enhanced_Implementation {
         enhancedInstance.readFileIntoGraph("domestic_route.txt", g);
         enhancedInstance.readFileIntoHashMap("IATA_airport_codes.txt", codes);
 
-        FrontPage();
+        // FrontPage();
 
         boolean exit = false;
 
-        // while (!exit) {
+        while (exit != true) {
 
-        System.out.println(" List of Airports");
-        System.out.println("---------------------------------");
-        readFileAndDisplay("airport_name_list.txt");
+            System.out.println(" List of Airports");
+            System.out.println("---------------------------------");
+            readFileAndDisplay("airport_name_list.txt");
 
-        System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(" Insert your source and destination airports by entering their");
-        System.out.println(" corresponding integer codes.");
-        System.out.println(" (eg. enter '0' for Kuala Lumpur International Airport)");
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println(" Insert your source and destination airports by entering their");
+            System.out.println(" corresponding integer codes.");
+            System.out.println(" (eg. enter '0' for Kuala Lumpur International Airport)");
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 
-        System.out.print("Source: ");
-        int v = sc.nextInt();
-        System.out.print("Destination: ");
-        int d = sc.nextInt();
+            System.out.print("Source: ");
+            int v = sc.nextInt();
+            System.out.print("Destination: ");
+            int d = sc.nextInt();
 
-        g.FindPathDFS(v, d);
+            g.FindPathDFS(v, d);
 
-        // Clear the console
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+            // // Clear the console
+            // System.out.print("\033[H\033[2J");
+            // System.out.flush();
 
-        List<Integer> path = new ArrayList<>();
-        path = g.edgeList;
-        System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
-        System.out.println("---------------------------------");
-        System.out.print("\n" + codes.get(v));
-        for (int i = 0; i < path.size(); i++) {
-            String IATA = codes.get(path.get(i));
-            System.out.print(" -> " + IATA);
+            List<Integer> path = new ArrayList<>();
+            path = g.edgeList;
+            System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
+            System.out.println("---------------------------------");
+            System.out.print("\n" + codes.get(v));
+            for (int i = 1; i < path.size(); i++) {
+                String IATA = codes.get(path.get(i));
+                System.out.print(" -> " + IATA);
+            }
+
+            System.out.println("\n\nFind another route? (y/n)");
+            char option = sc.next().charAt(0);
+            if (option == 'y' || option == 'Y')
+                exit = false;
+            else
+                exit = true;
+
+            // Clear the console
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+
         }
-
-        System.out.println("\n\nFind another route? (y/n)");
-        sc.nextLine();
-        sc.nextLine();
-        // int option = sc.nextInt();
-        // if (option != 'y' || option != 'Y')
-        // exit = true;
-
-        // }
-
-        // Clear the console
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
 
         System.out.println("==============================================");
         System.out.println("\n Thank you for visiting Malaysia Airlines! ");
