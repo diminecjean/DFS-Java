@@ -244,6 +244,7 @@ class Graph {
 }
 
 public class DFS_Enhanced_Implementation {
+    // Method 1 to read file: reads file into Graph
     public void readFileIntoGraph(String filename, Graph g) {
         try {
             // Creates a reader using the FileReader
@@ -274,6 +275,7 @@ public class DFS_Enhanced_Implementation {
         }
     }
 
+    // Method 2 to read file: reads file into hashmap
     public void readFileIntoHashMap(String filename, HashMap<Integer, String> map) {
         try {
             // Creates a reader using the FileReader
@@ -304,15 +306,15 @@ public class DFS_Enhanced_Implementation {
         }
     }
 
+    // Method 3 to read file: Reads file and displays exactly as read
     public static void readFileAndDisplay(String filename) {
         try {
             // Creates a reader using the FileReader
             FileReader input = new FileReader(filename);
             Scanner fileScanner = new Scanner(input);
 
-            // Content in text file is in the form of adjacency matrix
-            // Every first character of each line is the source vertex and
-            // the remaining characters in the line is its adjacent vertex
+            // Content is displayed exactly the same
+            // as the source file
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 System.out.println(line);
@@ -324,6 +326,7 @@ public class DFS_Enhanced_Implementation {
         }
     }
 
+    // Method to display the front page before the main page
     public static void FrontPage() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
 
@@ -368,21 +371,23 @@ public class DFS_Enhanced_Implementation {
         System.out.flush();
     }
 
+    // main method
     public static void main(String args[]) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
 
-        // Object of graph is created.
-        Graph g = new Graph();
-        HashMap<Integer, String> codes = new HashMap<>();
+        Graph g = new Graph(); // Object of graph is created.
+        HashMap<Integer, String> codes = new HashMap<>(); // to store the IATA airport codes and their corresponding
+                                                          // value
         DFS_Enhanced_Implementation enhancedInstance = new DFS_Enhanced_Implementation();
 
         enhancedInstance.readFileIntoGraph("domestic_route.txt", g);
         enhancedInstance.readFileIntoHashMap("IATA_airport_codes.txt", codes);
 
+        // Display front page
         FrontPage();
 
+        // Main page
         boolean exit = false;
-
         while (exit != true) {
 
             System.out.println(" List of Airports");
@@ -406,7 +411,7 @@ public class DFS_Enhanced_Implementation {
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
-            List<Integer> path = new ArrayList<>();
+            List<Integer> path = new ArrayList<>(); // get values of edgeList
             path = g.edgeList;
             System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
             System.out.println("---------------------------------");
