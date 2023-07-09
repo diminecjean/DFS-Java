@@ -13,7 +13,7 @@ class Graph {
     private Map<Integer, List<Integer>> map = new HashMap<>();
 
     // Edges visited that is included in the path from source to destination vertex
-    protected Stack<Integer> edgeList;
+    protected Stack<Integer> verticeList;
 
     // Edges visited that are not in the final path
     private Stack<Integer> visitedList;
@@ -25,7 +25,7 @@ class Graph {
 
     // Constructor
     public Graph() {
-        edgeList = new Stack<>();
+        verticeList = new Stack<>();
         visitedList = new Stack<>();
     }
 
@@ -176,10 +176,10 @@ class Graph {
             for (int vertex : map.keySet()) {
                 num.put(vertex, 0);
             }
-            edgeList.clear();
+            verticeList.clear();
             visitedList.clear();
 
-            edgeList.add(v); // add source edge into path
+            verticeList.add(v); // add source edge into path
 
             while (v != d && num.get(v) == 0) {
                 DFS(v, d);
@@ -202,7 +202,7 @@ class Graph {
                 if (map.get(u).isEmpty() && u != d)
                     continue;
                 else {
-                    edgeList.push(u);
+                    verticeList.push(u);
                     return DFS(u, d);
                 }
 
@@ -213,21 +213,21 @@ class Graph {
             // and u is the last value in the adjacency list of v,
             else if ((num.get(u) != 0) && (u == map.get(v).get(map.get(v).size() - 1))) {
                 if (u == d) {
-                    edgeList.push(u);
+                    verticeList.push(u);
                     return d;
                 }
                 // visitedList contains vertices that are visited but not
                 // considered in the final path
                 // if v is included in visitedList, the current iteration of the loop is skipped
-                // else, v will be removed from edgeList and added into visitedList,
-                // then the recursion continues with the last vertext in the edgeList
+                // else, v will be removed from verticeList and added into visitedList,
+                // then the recursion continues with the last vertext in the verticeList
                 // as the source vertex
                 else {
                     if (visitedList.contains(v))
                         continue;
                     else {
-                        visitedList.push(edgeList.pop());
-                        DFS(edgeList.lastElement(), d);
+                        visitedList.push(verticeList.pop());
+                        DFS(verticeList.lastElement(), d);
                     }
                 }
             }
@@ -404,8 +404,8 @@ public class DFS_Enhanced_Implementation {
             System.out.print("\033[H\033[2J");
             System.out.flush();
 
-            List<Integer> path = new ArrayList<>(); // get values of edgeList
-            path = g.edgeList;
+            List<Integer> path = new ArrayList<>(); // get values of verticeList
+            path = g.verticeList;
 
             if (g.ifVertexExist(v) && g.ifVertexExist(d)) {
                 System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
