@@ -1,9 +1,10 @@
-import java.io.FileReader;
-import java.io.FileNotFoundException;
-import java.util.*;
+// DFS - using hashmap for graph and stack for list of edges
+// Purpose: Find a route from a source airport to a destination airport within Malaysia
+//          (Find a path from the source vertex to destination vertex)
+// Disclaimer: The path found is not guaranteed to be the shortest path
+// Programmers: Looi Wei En, Lee Ying Hooi, Wong Jia Yi
 
 import java.io.FileReader;
-import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -20,14 +21,12 @@ class Graph {
     // Number of times each vertex is visited during DFS
     private Map<Integer, Integer> num = new HashMap<>();
 
-    private int i;
     private int numVertices = 0;
 
     // Constructor
     public Graph() {
         edgeList = new Stack<>();
         visitedList = new Stack<>();
-        i = 0;
     }
 
     // Method to add a vertex
@@ -182,7 +181,6 @@ class Graph {
             }
             edgeList.clear();
             visitedList.clear();
-            i = 0;
 
             edgeList.add(v); // add source edge into path
 
@@ -193,13 +191,6 @@ class Graph {
             if (num.get(d) == 0) {
                 System.out.print("\nThere is no path from " + v + " to " + d);
             }
-            // else {
-            // System.out.print("\nPath from " + v + " to " + d + ": ");
-            // System.out.print("\n" + v);
-            // for (int i = 1; i < edgeList.size(); i++) {
-            // System.out.print(" -> " + edgeList.get(i));
-            // }
-            // }
         } else {
             System.out.print("\n");
             ifVertexExist(v);
