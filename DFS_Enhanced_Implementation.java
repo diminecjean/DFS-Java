@@ -72,20 +72,17 @@ class Graph {
 
     // Method to remove an edge
     public void removeEdge(int source, int destination) {
-        // Check if destination vertex exists
-        ifVertexExist(source);
-
-        // Check if destination vertex exists
-        ifVertexExist(destination);
-
-        // If edge exists between source and destination,
-        // remove the edge (remove value from key)
-        if (map.get(source).contains(destination)) {
-            map.remove(source, destination);
-            System.out.print("Edge is removed.");
-        } else
-            System.out.print("There is no edge from " + source + " to " + destination);
-
+        if (ifVertexExist(source) && ifVertexExist(destination)) {
+            // If edge exists between source and destination,
+            // remove the edge (remove value from key)
+            if (map.get(source).contains(destination)) {
+                map.remove(source, destination);
+                System.out.print("Edge is removed.");
+            } else
+                System.out.print("There is no edge from " + source + " to " + destination);
+        } else {
+            System.out.println("Please enter a valid value.");
+        }
     }
 
     // Method to count the number of vertices present
@@ -106,19 +103,19 @@ class Graph {
     }
 
     // Method to determine if a vertex exists in the graph
-    public void ifVertexExist(int vertex) {
+    public boolean ifVertexExist(int vertex) {
         if (!map.containsKey(vertex))
-            System.out.println("Vertex " + vertex + " is not found in the graph");
+            return false;
         else
-            System.out.println("Vertex" + vertex + " is found in the graph.");
+            return true;
     }
 
     // Method to determine if there is an edge between two vertices
-    public void ifEdgeExist(int source, int destination) {
+    public boolean ifEdgeExist(int source, int destination) {
         if (!map.get(source).contains(destination))
-            System.out.print("There is no edge from " + source + " to " + destination);
+            return false;
         else
-            System.out.print("There exist an edge from " + source + " to " + destination);
+            return true;
     }
 
     // Method to show adjacency list
@@ -191,10 +188,6 @@ class Graph {
             if (num.get(d) == 0) {
                 System.out.print("\nThere is no path from " + v + " to " + d);
             }
-        } else {
-            System.out.print("\n");
-            ifVertexExist(v);
-            ifVertexExist(d);
         }
     }
 
@@ -413,12 +406,22 @@ public class DFS_Enhanced_Implementation {
 
             List<Integer> path = new ArrayList<>(); // get values of edgeList
             path = g.edgeList;
-            System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
-            System.out.println("---------------------------------");
-            System.out.print("\n" + codes.get(v));
-            for (int i = 1; i < path.size(); i++) {
-                String IATA = codes.get(path.get(i));
-                System.out.print(" -> " + IATA);
+
+            if (g.ifVertexExist(v) && g.ifVertexExist(d)) {
+                System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
+                System.out.println("---------------------------------");
+                System.out.print("\n" + codes.get(v));
+                for (int i = 1; i < path.size(); i++) {
+                    String IATA = codes.get(path.get(i));
+                    System.out.print(" -> " + IATA);
+                }
+            } else {
+                if (!g.ifVertexExist(v)) {
+                    System.out.println(v + " is not a valid code.");
+                }
+                if (!g.ifVertexExist(d)) {
+                    System.out.println(d + " is not a valid code.");
+                }
             }
 
             System.out.println("\n\nFind another route? (y/n)");
