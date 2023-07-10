@@ -323,20 +323,42 @@ public class DFS_Enhanced_Implementation {
     public static void FrontPage() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
 
-        String pattern = "\n\n               __|__\n" +
-                "        --@--@--(_)--@--@--";
+        String pattern = "\n\n            \t\t        __|__\n" +
+                "       \t\t     \t --@--@--(_)--@--@--\n" +
+                "\t\t\t\t  +\n";
 
         System.out.println(pattern);
 
-        System.out.println("                                    ");
-        System.out.println("                                    ");
-        System.out.println("====================================");
-        System.out.println("    Welcome to Malaysia Airlines    ");
-        System.out.println("====================================");
+
+        // Define the characters for each line of the 3D text
+        String[] lines = {
+            "\t     __        __                   ",
+            "\t     \\ \\      / /__ _  ____  ___   __  __  ___",
+            "\t      \\ \\ /\\ / / _ \\ |/  __\\/   \\ /  \\/  \\/ _ \\",
+            "\t       \\ V  V /  __/ |__(__| ()  |       |  __/",
+            "\t        \\_/\\_/ \\___|_____|_/\\___/|_/\\_/\\__\\___|",
+            "                                         "
+        };
+
+        // Print each line of the 3D text
+        for (String line : lines) {
+            System.out.println(line);
+        }
+
+        // Print the sentence below the 3D text
+        System.out.println("\n");
+
+       
+        System.out.println("\t=======================================================");
+        System.out.println("\t    This is Malaysia Airlines' Route Checking System    ");
+        System.out.println("\t=======================================================");
         System.out.println("                                    ");
         System.out.println("                                    ");
 
-        System.out.println("Press Enter to Continue...");
+        System.out.println("\t\t\tIn this system," +
+        "\nYou will be able to check the routes between airports located in Malaysia");
+
+        System.out.println("\n\nPress Enter to Start checking Routes...\n");
         sc.nextLine();
 
         // Clear the console
@@ -346,7 +368,7 @@ public class DFS_Enhanced_Implementation {
         pattern = "\n\n                              _\n" +
                 "                              -=\\`\\\n" +
                 "                          |\\ ____\\_\\__\n" +
-                "Loading...              -=\\c`\"\"\"\"\"\"\"\" \"`)\n" +
+                "Taking Off...              -=\\c`\"\"\"\"\"\"\"\" \"`)\n" +
                 "                           `~~~~~/ /~~`\n" +
                 "                             -==/ /\n" +
                 "                               '-'";
@@ -383,19 +405,20 @@ public class DFS_Enhanced_Implementation {
         boolean exit = false;
         while (exit != true) {
 
-            System.out.println(" List of Airports");
-            System.out.println("---------------------------------");
+            System.out.println("----------------------------------------");
+            System.out.println("Here's The List of Airports in Malaysia");
+            System.out.println("----------------------------------------");
             readFileAndDisplay("airport_name_list.txt");
 
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(" Insert your source and destination airports by entering their");
-            System.out.println(" corresponding integer codes.");
-            System.out.println(" (eg. enter '0' for Kuala Lumpur International Airport)");
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            System.out.println("\n========================================================================");
+            System.out.println(" Insert your departure and destination airports by entering their");
+            System.out.println(" corresponding integer codes to retrieve the route between the airports.");
+            System.out.println("\n (eg. enter '0' for Kuala Lumpur International Airport)");
+            System.out.println("========================================================================\n");
 
-            System.out.print("Source: ");
+            System.out.print("Departure Airport: ");
             int v = sc.nextInt();
-            System.out.print("Destination: ");
+            System.out.print("Destination Airport: ");
             int d = sc.nextInt();
 
             g.FindPathDFS(v, d);
@@ -408,8 +431,8 @@ public class DFS_Enhanced_Implementation {
             path = g.verticeList;
 
             if (g.ifVertexExist(v) && g.ifVertexExist(d)) {
-                System.out.println("\nFlight path from " + codes.get(v) + " to " + codes.get(d) + ": ");
-                System.out.println("---------------------------------");
+                System.out.println("\nShowing Flight Path from " + codes.get(v) + " to " + codes.get(d) + ": ");
+                System.out.println("-------------------------------------");
                 System.out.print("\n" + codes.get(v));
                 for (int i = 1; i < path.size(); i++) {
                     String IATA = codes.get(path.get(i));
@@ -424,7 +447,7 @@ public class DFS_Enhanced_Implementation {
                 }
             }
 
-            System.out.println("\n\nFind another route? (y/n)");
+            System.out.println("\n\n\nDo You Wish to Check Another Route? (y for yes/n for no)");
             char option = sc.next().charAt(0);
             if (option == 'y' || option == 'Y')
                 exit = false;
@@ -442,7 +465,13 @@ public class DFS_Enhanced_Implementation {
         System.out.println("        ~~~~ See you next time ~~~~ ");
         System.out.println("\n==============================================");
 
-        System.out.println("\n\nExiting program...");
+        String pattern = "\n\n                    __|__\n" +
+        "             --@--@--(_)--@--@--\n" +
+        "\t\t      +\n";
+
+System.out.println(pattern);
+
+        System.out.println("\n\nExiting program...\n");
 
         Thread.sleep(1000);
 
